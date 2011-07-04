@@ -68,32 +68,29 @@ module KnifeFlow
         candidate_data.cookbook_versions.each do | book_data |
           cb_a << book_data[0]
       
-          # 2) add or update 
+          # 2) add or update the cookbook in the environment cookbook_versions list
           env_data.cookbook_versions.merge!(book_data[0] => book_data[1])
        
         end
         
-       
-        # 4) upload cookbooks to chef server
-        Chef::Knife::CookbookUpload.new(cb_a).run
-      
-          # 3) write the environment to file
+        # 3) write the environment to file
         File.open("environments/#{env_name}.json","w") do |f|
           f.write(JSON.pretty_generate(env_data))
         end
-       
+        
+        # 4) upload cookbooks to chef server
+        Chef::Knife::CookbookUpload.new(cb_a).run
+      
         # 5) upload environment to chef server
         knife_environment_from_file = Chef::Knife::EnvironmentFromFile.new
         knife_environment_from_file.name_args = ["#{env_name}.json"]
         output = knife_environment_from_file.run
 
-
+        # 6) commit all changes and finish the git-flow release
         system("git commit -am 'the candidate environemnt is now in production and tagged #{tag_name}'")
-
         system("git flow release finish -m 'testing' #{tag_name}") 
 
         system("git push origin #{WORKING_BRANCH} --tags")
-
 
       end
 
@@ -148,7 +145,6 @@ module KnifeFlow
       print "--------------------------------- \n"
     end
 
-
     def pull_branch(name)
       print "--------------------------------- \n"
       system("git pull origin #{name}")
@@ -191,7 +187,6 @@ module KnifeFlow
       body_of_file.gsub!(search_string, replace_string)
       File.open(file, "w") { |file| file << body_of_file }
     end
-
 
   end
 end
