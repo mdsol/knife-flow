@@ -24,48 +24,37 @@ Plugins
 ---------------
 
 ### increment
-
 Increments the cookbooks version by 1 digit at the patch level ( i.e. 2.3.1 -> 2.3.2 )
-
 Uploads the cookbook by running <tt> knife cookbook upload COOCKBOOK1 COOKBOOK2 </tt> 
-
 Commits the changes to the "develop" branch 
 
 
-  <tt>$ knife increment COOKBOOK1 COOKBOOK2 ... </tt>
+    <tt>$ knife increment COOKBOOK1 COOKBOOK2 ... </tt>
 
 
 This plugin is useful when working on the projects in the "sandbox" stage. The "_default" environment will always load the latest versions of the cookbooks.
 
 
 ### promote
-
 Increments the cookbooks version by 1 digit at the patch level ( i.e. 2.3.1 -> 2.3.2 )
-
 Uploads the cookbook by running <tt> knife cookbook upload COOCKBOOK1 COOKBOOK2 </tt> 
-
 Updates the environments/"ENVIRONMENT.json" file with the list of COOCKBOOK1 COOKBOOK2 and relative new versions.
-
 Uploads the ENVIRONMENT.json file to the "development" Opscode organization.
-
 Commits the changes to the "develop" branch 
 
 
-  <tt>$ knife promote  ENVIRONMENT(candidate) COOKBOOK1 COOCKBOOK2 ...</tt>
+    <tt>$ knife promote  ENVIRONMENT(candidate) COOKBOOK1 COOCKBOOK2 ...</tt>
 
 
 This plugin is useful when working on the projects in the "validation" and "performance" stage. The "candidate" environment will be used to validate the cookbooks versions.
 
 
 ### release
-
 Copies the "candidate" environment cookbook versions and transfer them to the ENVIRONMENT in the "production" org.
-
 Commits all changes and creates a release tag TAG_NAME using the <tt> git flow release start/finish TAG_NAME </tt>.
-
 Uploads all cookbooks to the "production" org.
 
-  <tt>$ knife release ENVIRONMENT(innovate, production) TAG_NAME(2011.2.3) </tt>
+    <tt>$ knife release ENVIRONMENT(innovate, production) TAG_NAME(2011.2.3) </tt>
 
 This plugin is useful when we are ready to migrate the cookbooks to the environments in the "production" org.
 
