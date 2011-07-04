@@ -1,6 +1,23 @@
+#
+## Author:: Johnlouis Petitbon (<jpetitbon@mdsol.com>)
+##
+## Licensed under the Apache License, Version 2.0 (the "License");
+## you may not use this file except in compliance with the License.
+## You may obtain a copy of the License at
+##
+##     http://www.apache.org/licenses/LICENSE-2.0
+##
+## Unless required by applicable law or agreed to in writing, software
+## distributed under the License is distributed on an "AS IS" BASIS,
+## WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+## See the License for the specific language governing permissions and
+## limitations under the License.
+##
+#
+
 require 'chef/knife'
  
-module ChefFlow
+module KnifeFlow
   class Promote < Chef::Knife
  
     deps do
@@ -23,10 +40,6 @@ module ChefFlow
       cookbooks = all_args
       
       self.config = Chef::Config.merge!(config)
-      
-      switch_org(env_name)
-
-      self.config = Chef::Config.merge!(config)
      
       if !config[:cookbook_path]
         raise ArgumentError, "Default cookbook_path is not specified in the knife.rb config file, and a value to -o is not provided. Nowhere to write the new cookbook to." 
@@ -36,21 +49,19 @@ module ChefFlow
 
       if check_branch(WORKING_BRANCH)
         
-        # 0) make sure we have the latest from the working branch
         pull_branch(WORKING_BRANCH)
 
         env_json = load_env_file(env_name)
         
         env_data = JSON.parse(env_json)
     
-
         cookbooks.each do | book |
           metadata_file = File.join(@cookbook_path, book, "metadata.rb")
 
           # 1) increase version on the metadata file
           replace_version(find_version(book), increment_version(find_version(book)), metadata_file )
       
-          # 2) merge the new cookbook into the environment
+          # 2) add or update the cookbook in the environment cookbook_versions list
           env_data.cookbook_versions.merge!(book => find_version(book))
         
         end
@@ -75,30 +86,13 @@ module ChefFlow
 
     end
   
-    def switch_org(env_name)
-      # TODO: someone smarter than me can switch the organization without requiring 2 different knife.rb files
-      current_dir = File.dirname(__FILE__)   
-      case env_name
-      when "production"
-        Chef::Config[:config_file] = "#{current_dir}/../../knife-production.rb"
-      when "candidate"
-        Chef::Config[:config_file] = "#{current_dir}/../../knife.rb"
-      end
-      ::File::open(config[:config_file]) { |f| apply_config(f.path) }
-    end
-
     def load_env_file(env_name)
       if File.exist?("environments/#{env_name}.json")
         File.read("environments/#{env_name}.json")
       else
-        # TODO: we should handle the creation of the environment.json file if it doesn't exist.
+        # TODO - we should handle the creation of the environment.json file if it doesn't exist.
         raise ArgumentError, "environments/#{env_name}.json was not found; please create the environment file manually.#{env_name}"
       end
-    end
-
-    def apply_config(config_file_path)
-      Chef::Config.from_file(config_file_path)
-      Chef::Config.merge!(config)
     end
 
     def commit_and_push_branch(branch, comment)
@@ -120,7 +114,7 @@ module ChefFlow
       if (`git status` =~ /#{name}/) != nil
         return true
       else
-        ui.error("USAGE: you must be in the #{name} branch to promote cookbooks")
+        ui.error("USAGE: you must be in the #{name} branch.")
         exit 1
       end
     end

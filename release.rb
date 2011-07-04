@@ -1,6 +1,23 @@
+#
+## Author:: Johnlouis Petitbon (<jpetitbon@mdsol.com>)
+##
+## Licensed under the Apache License, Version 2.0 (the "License");
+## you may not use this file except in compliance with the License.
+## You may obtain a copy of the License at
+##
+##     http://www.apache.org/licenses/LICENSE-2.0
+##
+## Unless required by applicable law or agreed to in writing, software
+## distributed under the License is distributed on an "AS IS" BASIS,
+## WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+## See the License for the specific language governing permissions and
+## limitations under the License.
+##
+#
+
 require 'chef/knife'
  
-module ChefFlow
+module KnifeFlow
   class Release < Chef::Knife
  
     deps do
@@ -32,19 +49,15 @@ module ChefFlow
       end
       @cookbook_path = Array(config[:cookbook_path]).first
       
-
       if check_branch(WORKING_BRANCH)
         
-       
-        # 0) make sure we have the latest from the working branch
         pull_branch(WORKING_BRANCH)
-
 
         system("git fetch --tags")
 
+        # 1) start a new git-flow release
         system("git flow release start #{tag_name}")
   
-
         candidate_json = load_env_file(CANDIDATE_ENVIRONMENT)
         candidate_data = JSON.parse(candidate_json)
         
@@ -55,7 +68,7 @@ module ChefFlow
         candidate_data.cookbook_versions.each do | book_data |
           cb_a << book_data[0]
       
-          # 2) merge the new cookbook into the environment
+          # 2) add or update 
           env_data.cookbook_versions.merge!(book_data[0] => book_data[1])
        
         end
@@ -146,7 +159,7 @@ module ChefFlow
       if (`git status` =~ /#{name}/) != nil
         return true
       else
-        ui.error("USAGE: you must be in the #{name} branch to promote cookbooks")
+        ui.error("USAGE: you must be in the #{name} branch.")
         exit 1
       end
     end
