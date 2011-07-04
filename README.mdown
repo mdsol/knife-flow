@@ -1,24 +1,24 @@
 knife-flow 
 ========
-A collection of Chef plugins for managing the migration of cookbooks to environments in different Chef Server organizations.
+A collection of Chef plugins for managing the migration of cookbooks to environments in different Opscode organizations.
 The main reason for having a workflow around the development and promotion of cookbooks is to ensure quality, reliability and administrative security of the process.  
 
 Requirements
 ---------------
 Right now knife-flow is build with many assumptions:
 
-* The knife-flow assumes you have at least 2 Opscode organizations; one for "development" and one for "production" 
-* The "development" organization has one environment called "candidate".
-* The "production" organization has an "innovate" and a "production" environments.
+* The knife-flow assumes you have at least 2 orgs; one for "development" and one for "production".
+* The "development" org has one environment called "candidate".
+* The "production" org has an "innovate" and a "production" environment.
 * You are using git flow [http://jeffkreeftmeijer.com/2010/why-arent-you-using-git-flow/](http://jeffkreeftmeijer.com/2010/why-arent-you-using-git-flow/) for your chef-repo project.
-* You are in the "develop" branch for the plugins to work.
-* You have 2 environments in the "production" organization 
 
 Installing knife-flow
 -------------------
 Be sure you are running the latest version Chef.
 
-These plugins are distributed as ruby files. To install them, copy the files in the <tt>chef-repo/.chef/knife/plugins</tt> directory.
+Map the "development" org to the knife.rb file, and map the "production" org to a knife-production.rb file.
+
+Copy the increment.rb, promote.rb and release.rb files to the <tt>chef-repo/.chef/knife/plugins</tt> directory.
 
 Plugins
 ---------------
