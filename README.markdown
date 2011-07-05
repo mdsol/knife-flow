@@ -29,7 +29,7 @@ Uploads the cookbook by running <tt> knife cookbook upload COOKBOOK COOKBOOK </t
 Commits the changes to the "develop" branch <br />
 
 
-    $ knife increment COOKBOOK1 COOKBOOK2 ... 
+    $ knife increment COOKBOOK COOKBOOK ... 
 
 
 This plugin is useful when working on the projects in the "sandbox" stage. The "_default" environment will always load the latest versions of the cookbooks.
@@ -38,7 +38,7 @@ This plugin is useful when working on the projects in the "sandbox" stage. The "
 ### promote
 Increments the cookbooks version by 1 digit at the patch level ( i.e. 2.3.1 -> 2.3.2 ) <br />
 Uploads the cookbook by running <tt> knife cookbook upload COOKBOOK COOKBOOK </tt> <br />
-Updates the environments/ENVIRONMENT.json file with the list of COOKBOOK1 COOKBOOK2 and relative new versions. <br />
+Updates the environments/ENVIRONMENT.json file with the list of COOKBOOK COOKBOOK and relative new versions. <br />
 Uploads the ENVIRONMENT.json file to the "development" org. <br />
 Commits the changes to the "develop" branch. <br />
 

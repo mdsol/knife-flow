@@ -54,7 +54,10 @@ module KnifeFlow
         end
       
         # 2) upload cookbooks to chef server
-        Chef::Knife::CookbookUpload.new(@cookbooks).run
+        cookbook_up = Chef::Knife::CookbookUpload.new
+        cookbook_up.name_args = @cookbooks 
+        cookbook_up.config[:freeze] = true
+        cookbook_up.run  
         
         # 3) commit and push WORKING_BRANCH
         commit_and_push_branch(WORKING_BRANCH, "#{@cookbooks} have been incremented")

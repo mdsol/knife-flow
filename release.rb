@@ -79,8 +79,11 @@ module KnifeFlow
         end
         
         # 4) upload cookbooks to chef server
-        Chef::Knife::CookbookUpload.new(cb_a).run
-      
+        cookbook_up = Chef::Knife::CookbookUpload.new
+        cookbook_up.name_args = cb_a
+        cookbook_up.config[:freeze] = true
+        cookbook_up.run  
+
         # 5) upload environment to chef server
         knife_environment_from_file = Chef::Knife::EnvironmentFromFile.new
         knife_environment_from_file.name_args = ["#{env_name}.json"]
