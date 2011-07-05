@@ -62,7 +62,7 @@ License terms
 -------------
 Authors:: Johnlouis Petitbon, Jacob Zimmerman, Aaron Suggs 
 
-Copyright:: Copyright (c) 2009-2011 Medidata Solutioins Worldwide, Inc.
+Copyright:: Copyright (c) 2009-2011 Medidata Solutions Worldwide, Inc.
 
 License:: Apache License, Version 2.0
 
