@@ -25,7 +25,7 @@ Plugins
 
 ### increment
 Increments the cookbooks version by 1 digit at the patch level (i.e. 2.3.1 -> 2.3.2 ) <br />
-Uploads the cookbook by running <tt> knife cookbook upload COOCKBOOK COOKBOOK </tt> <br />
+Uploads the cookbook by running <tt> knife cookbook upload COOKBOOK COOKBOOK </tt> <br />
 Commits the changes to the "develop" branch <br />
 
 
@@ -37,13 +37,13 @@ This plugin is useful when working on the projects in the "sandbox" stage. The "
 
 ### promote
 Increments the cookbooks version by 1 digit at the patch level ( i.e. 2.3.1 -> 2.3.2 ) <br />
-Uploads the cookbook by running <tt> knife cookbook upload COOCKBOOK1 COOKBOOK2 </tt> <br />
-Updates the environments/ENVIRONMENT.json file with the list of COOCKBOOK1 COOKBOOK2 and relative new versions. <br />
+Uploads the cookbook by running <tt> knife cookbook upload COOKBOOK COOKBOOK </tt> <br />
+Updates the environments/ENVIRONMENT.json file with the list of COOKBOOK1 COOKBOOK2 and relative new versions. <br />
 Uploads the ENVIRONMENT.json file to the "development" org. <br />
 Commits the changes to the "develop" branch. <br />
 
 
-    $ knife promote  ENVIRONMENT(i.e. candidate) COOKBOOK COOCKBOOK ...
+    $ knife promote  ENVIRONMENT(i.e. candidate) COOKBOOK COOKBOOK ...
 
 
 This plugin is useful when working on the projects in the "validation" and "performance" stage. The "candidate" environment will be used to validate the cookbooks versions.
@@ -60,7 +60,7 @@ This plugin is useful when we are ready to migrate the cookbooks to the environm
 
 License terms
 -------------
-Authors:: Johnlouis Petitbon, Jackob Zimmerman, Aaron Suggs 
+Authors:: Johnlouis Petitbon, Jacob Zimmerman, Aaron Suggs 
 
 Copyright:: Copyright (c) 2009-2011 Medidata Solutioins Worldwide, Inc.
 
