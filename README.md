@@ -16,7 +16,7 @@ Installing knife-flow
 -------------------
 Be sure you are running the latest version Chef.
 
-gem install knife-flow
+    gem install knife-flow
 
 If you are a production level administrator: map the "development" org to the knife.rb file, and the "production" org to a knife-production.rb file.
 All other developers just need the regurlar "development" org to the knife.rb file mapping.
@@ -31,7 +31,7 @@ Uploads the cookbook by running <tt> knife cookbook upload COOKBOOK COOKBOOK </t
 Commits the changes to the "develop" branch <br />
 
 
-    $ knife increment COOKBOOK COOKBOOK ... 
+    knife increment COOKBOOK COOKBOOK ... 
 
 
 This plugin is useful when working on the projects in the "sandbox" stage. The "_default" environment will always load the latest versions of the cookbooks.
@@ -45,7 +45,7 @@ Uploads the ENVIRONMENT.json file to the "development" org. <br />
 Commits the changes to the "develop" branch. <br />
 
 
-    $ knife promote  ENVIRONMENT(i.e. candidate) COOKBOOK COOKBOOK ...
+    knife promote  ENVIRONMENT(i.e. candidate) COOKBOOK COOKBOOK ...
 
 
 This plugin is useful when working on the projects in the "validation" and "performance" stage. The "candidate" environment will be used to validate the cookbooks versions.
@@ -56,7 +56,7 @@ Copies the "candidate" environment cookbook list and transfer them to the ENVIRO
 Commits all changes and creates a release tag TAG using the <tt> git flow release start/finish TAG </tt>. <br />
 Uploads all cookbooks to the "production" org. <br />
 
-    $ knife release ENVIRONMENT(i.e. innovate or production) TAG(i.e. 2011.2.3)
+    knife release ENVIRONMENT(i.e. innovate or production) TAG(i.e. 2011.2.3)
 
 This plugin is useful when we are ready to migrate the cookbooks to the environments in the "production" org.
 
