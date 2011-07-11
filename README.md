@@ -16,9 +16,11 @@ Installing knife-flow
 -------------------
 Be sure you are running the latest version Chef.
 
-Map the "development" org to the knife.rb file, and map the "production" org to a knife-production.rb file.
+gem install knife-flow
 
-Copy the increment.rb, promote.rb and release.rb files to the <tt>chef-repo/.chef/knife/plugins</tt> directory.
+If you are a production level administrator: map the "development" org to the knife.rb file, and the "production" org to a knife-production.rb file.
+All other developers just need the regurlar "development" org to the knife.rb file mapping.
+
 
 Plugins
 ---------------
