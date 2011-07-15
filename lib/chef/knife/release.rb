@@ -103,12 +103,10 @@ module KnifeFlow
       # TODO - someone smarter than me can switch the organization without requiring 2 different knife.rb files
       current_dir = File.dirname(__FILE__)   
       case env_name
-      when "innovate"
-        Chef::Config[:config_file] = "#{current_dir}/../../knife-production.rb"
-      when "production"
-        Chef::Config[:config_file] = "#{current_dir}/../../knife-production.rb"
+      when "innovate", "production"
+        Chef::Config[:config_file] = File.join File.expand_path('.chef'), "knife-production.rb"
       when "candidate"
-        Chef::Config[:config_file] = "#{current_dir}/../../knife.rb"
+        Chef::Config[:config_file] = File.join File.expand_path('.chef'), "knife.rb"
       end
       ::File::open(config[:config_file]) { |f| apply_config(f.path) }
     end
@@ -165,7 +163,7 @@ module KnifeFlow
 
     def parse_name_args!
       if name_args.empty?
-        ui.error("USAGE: knife promote ENVIRONMENT COOKBOOK COOKBOOK ...")
+        ui.error("USAGE: knife release ENVIRONMENT TAG")
         exit 1
       else
         return name_args
